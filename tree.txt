@@ -1,0 +1,38 @@
+SlaveVM_monitoring/
+│
+├── app/
+│   ├── static/ Contains the Flask application and all related files.
+│   │   └── [static files] / For static files like CSS, JavaScript, and images.
+│   ├── templates/
+│   │   └── [HTML templates] / For HTML templates.
+│   ├── views/
+│   │   └── [Flask view scripts] / Python files defining Flask routes and views.
+│   └── models/
+│       └── [Database models] / Python files defining database models.
+│
+├── scripts/
+│   └── [Python/Linux scripts for VM management] / Contains Python/Linux scripts for VM management.
+│
+├── config/
+│   └── [Configuration files] / Configuration files, including settings for different environments (development, production).
+│
+├── docs/
+│   └── [Documentation files] / Documentation files, including project specifications, design documents, and user guides.
+│
+├── tests/
+│   └── [Test scripts] / Automated tests for the application (both front-end and back-end).
+│
+├── bin/
+│   └── [Executable and build scripts] / Executable files or scripts for project setup, build, or deployment.
+│
+├── db/
+│   └── [Database scripts and migrations] / Contains database scripts, migrations, and possibly seed data.
+│
+├── log/
+│   └── [Log files] / Log files for the application.
+│
+├── build/
+│   └── [Build-related files] / Files related to building the project into an executable or other deployment formats.
+│
+└── [Root directory files including README, setup scripts, etc.]
+	Contains configuration files, README, and other global files.

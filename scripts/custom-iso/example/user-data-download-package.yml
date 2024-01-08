@@ -1,0 +1,84 @@
+#cloud-config, only for ubuntu 22.04.3
+autoinstall:
+  apt:
+    disable_components: []
+    disable_suites: [security]
+    geoip: true
+    preserve_sources_list: false
+    primary:
+      - arches:
+          - amd64
+          - i386
+        uri: http://archive.ubuntu.com/ubuntu
+      - arches:
+          - default
+        uri: http://ports.ubuntu.com/ubuntu-ports
+  drivers:
+    install: false
+  identity:
+    hostname: ubuntu
+    # default password: 12345
+    password: $6$FnHPy.4giHfDcI8r$vllY94AceZFt20M6WzxXKfOLuycO7o8QD8RJJwVs/DSGcHNNF4ilbGrukXPMA3irAdiimHo0fl2zUdkbRO9vh1
+    realname: ubuntu
+    username: ubuntu
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      ens160:
+        addresses:
+          - 192.168.10.103/24
+        nameservers:
+          addresses:
+            - 114.114.114.114
+            - 8.8.8.8
+          search: []
+        routes:
+          - to: default
+            via: 192.168.10.1
+    version: 2
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  storage:
+    config:
+      # Partition table
+      - { ptable: gpt, path: /dev/sda, wipe: superblock-recursive, preserve: false, name: '', grub_device: true,type: disk, id: disk-sda }
+      - { device: disk-sda, size: 1048576, flag: bios_grub, number: 1, preserve: false, grub_device: false, offset: 1048576, type: partition, id: partition-0 }
+      # Linux boot partition size 2G
+      - { device: disk-sda, size: 2147483648, wipe: superblock, number: 2, preserve: false, grub_device: false, offset: 2097152, type: partition, id: partition-1 }
+      - { fstype: ext4, volume: partition-1, preserve: false, type: format, id: format-0 }
+      # Partition for LVM, VG
+      - { device: disk-sda, size: -1, wipe: superblock, number: 3, preserve: false, grub_device: false, offset: 2149580800, type: partition, id: partition-2 }
+      - { name: ubuntu-vg, devices: [ partition-2 ], preserve: false, type: lvm_volgroup, id: lvm_volgroup-0 }
+      # Swap size 1G
+      - { name: swap, volgroup: lvm_volgroup-0, size: 1073741824B, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-1 }
+      - { fstype: swap, volume: lvm_partition-1, preserve: false, type: format, id: format-1 }
+      # Remaining capacity size LV for the root partition
+      - { name: ubuntu-lv, volgroup: lvm_volgroup-0, size: -1, wipe: superblock, preserve: false, type: lvm_partition, id: lvm_partition-0 }
+      - { fstype: ext4, volume: lvm_partition-0, preserve: false, type: format, id: format-2 }
+      # Mount points
+      - { path: /, device: format-2, type: mount, id: mount-2 }
+      - { path: '', device: format-1, type: mount, id: mount-1 }
+      - { path: /boot, device: format-0, type: mount, id: mount-0 }
+    swap:
+      swap: 0
+    grub:
+      # This avoids a loop where we autoinstall, reboot to the autoinstaller USB, then autoinstall again and so on.
+      reorder_uefi: False
+  version: 1
+  user-data:
+    timezone: Asia/Shanghai
+    # enable root account
+    disable_root: false
+  late-commands:
+    - cp -rp /cdrom/mnt /target/
+    - chmod +x /target/mnt/script/install-pkgs.sh
+    - curtin in-target --target=/target -- /mnt/script/install-pkgs.sh
+    - chmod +x /target/mnt/script/config.sh
