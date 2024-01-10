@@ -30,7 +30,7 @@ def create_sub_vm():
     create_script_path = "./create_sub_vm.sh"
 
     sub_vm_name = "SubVM"
-    create_custom_iso()
+    # create_custom_iso()
 
     try:
         cmd = f"{create_script_path} {sub_vm_name}"
