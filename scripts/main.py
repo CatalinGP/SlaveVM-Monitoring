@@ -1,19 +1,31 @@
 import subprocess
+import sys
+import os
 
+def run_script(script_path, *args):
+    try:
+        subprocess.run([sys.executable, script_path, *args], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error during script execution: {e}")
+        return False
+    return True
 
 def main():
-    try:
-        # Call create_sub_vm.py script
-        subprocess.run(["python3", "./create.py"], check=True)
-        print("Main: create_sub_vm.py script executed successfully.")
+    # Adjust the relative paths according to your directory structure
+    create_vm_script = "./create_vm/vm_create.py"
+    monitor_vm_script = "./monitor_vm/monitor_vm.py"
 
-        # Call backup_sub_vm.py script
-        # subprocess.run(["python3", "./back_up.py"], check=True)
-        # print("Main: backup_sub_vm.py script executed successfully.")
+    print("Running create_vm script...")
+    if run_script(create_vm_script):
+        print("create_vm script executed successfully.")
 
-    except subprocess.CalledProcessError as e:
-        print(f"Main: Error during script execution: {e}")
-
+        print("Running monitor_vm script...")
+        if run_script(monitor_vm_script):
+            print("monitor_vm script executed successfully.")
+        else:
+            print("Failed to execute monitor_vm script.")
+    else:
+        print("Failed to execute create_vm script.")
 
 if __name__ == "__main__":
     main()
