@@ -1,7 +1,8 @@
 import subprocess
-import os
 import sys
-from config.ssh_config import ssh_config_param
+import config.vm_config
+from config.vm_config import vm_config_param
+
 
 def execute_shell_script(script_path, *args):
     try:
@@ -11,37 +12,30 @@ def execute_shell_script(script_path, *args):
         sys.exit(1)
 
 
-def is_vm_exists(vm_name):
+def is_vm_exists(vm_directory):
     vboxmanage_path = "C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe"
     try:
         existing_vms = subprocess.check_output([vboxmanage_path, "list", "vms"], shell=True).decode()
-        return vm_name in existing_vms
+        return vm_directory in existing_vms
     except subprocess.CalledProcessError as e:
         print(f"Error checking existing VMs: {e.output.decode().strip()}", file=sys.stderr)
         return False
 
 
-def create_vm(vm_name, iso_path, vm_dir, hdd_path):
-    if is_vm_exists(vm_name):
-        print(f"VM '{vm_name}' already exists. Skipping creation.")
+def create_vm(vm_directory):
+    config.vm_config.create_vm_params_sh_file()
+    if is_vm_exists(vm_directory):
+        print(f"VM '{vm_directory}' already exists. Skipping creation.")
         return
 
     script_path = 'create_vm.sh'
-    execute_shell_script(script_path, vm_name, iso_path, vm_dir, hdd_path)
+    execute_shell_script(script_path)
 
 
-vm_name = ssh_config_param["vm_name"]
-iso_path = ssh_config_param["iso_path"]
-vm_dir = ssh_config_param["vm_dir"]
-hdd_path = ssh_config_param["hdd_path"]
+vm_dir = vm_config_param['volumename']
+vboxmanage_file = 'vboxmanage_addPath.sh'
+execute_shell_script(vboxmanage_file)
 
-vboxmanage_path = 'vboxmanage_addPath.sh'
-execute_shell_script(vboxmanage_path)
+# os.makedirs(vm_dir, exist_ok=True)
 
-if not os.path.exists(iso_path):
-    print(f"ISO file not found: {iso_path}", file=sys.stderr)
-    sys.exit(1)
-
-os.makedirs(vm_dir, exist_ok=True)
-
-create_vm(vm_name, iso_path, vm_dir, hdd_path)
+create_vm(vm_dir)

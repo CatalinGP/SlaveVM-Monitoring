@@ -1,22 +1,42 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-source ssh_config.py
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+config_dir="$(dirname $(dirname "$script_dir"))"
+cd "$config_dir/config" || exit 1
 
-vm_name="${ssh_config["vm_name"]}"
-iso_path="${ssh_config["iso_path"]}"
-vm_dir="${ssh_config["vm_dir"]}"
-hdd_path="${ssh_config["hdd_path"]}"
-ssh_host="${ssh_config["ssh_host"]}"
-ssh_port="${ssh_config["ssh_port"]}"
-ssh_user="${ssh_config["ssh_user"]}"
+source "ssh_params.sh"
+ssh_host=$host
+ssh_port=$port
+ssh_user=$user
 
-# Quick test param
-#vm_name="MyVM"
-#iso_file="ubuntu-22.04.3-live-server-amd64.iso"  # Replace with your Ubuntu ISO file name
-#project_dir=$(pwd)
-#iso_path="${project_dir}/${iso_file}"
-#vm_dir="${project_dir}/VirtualMachines"
-#hdd_path="${vm_dir}/${vm_name}/${vm_name}.vdi"
+source "vm_params.sh"
+vm_name=$vmname
+iso_path=$isopath
+vm_dir=$vmdir
+hdd_name=$hddname
+
+cd "$script_dir" || exit 1
+
+is_not_empty() {
+    local var="$1"
+    local message="$2"
+    if [ -n "$var" ]; then
+        echo "$message: Variable is not empty."
+        return 0  # Variable is not empty
+    else
+        echo "$message: Variable is empty."
+        return 1  # Variable is empty
+    fi
+}
+
+is_not_empty "$vm_name" "Checking my_variable"
+is_not_empty "$iso_path" "Checking my_variable"
+is_not_empty "$vm_dir" "Checking my_variable"
+is_not_empty "$hdd_name" "Checking my_variable"
+
+is_not_empty "$ssh_host" "Checking my_variable"
+is_not_empty "$ssh_port" "Checking my_variable"
+is_not_empty "$ssh_user" "Checking my_variable"
 
 
 find_vboxmanage() {
@@ -67,8 +87,8 @@ run_command "${vboxmanage_cmd[@]}"
 
 echo "Creating virtual hard disk..."
 mkdir -p "${vm_dir}"
-if [ ! -f "${hdd_path}" ]; then
-    vboxmanage_cmd=("${vboxmanage}" createhd --filename "${hdd_path}" --size 50000)  # Size in MB
+if [ ! -f "${hdd_name}" ]; then
+    vboxmanage_cmd=("${vboxmanage}" createhd --filename "${hdd_name}" --size 50000)  # Size in MB
     run_command "${vboxmanage_cmd[@]}"
 else
     echo "Virtual hard disk already exists. Skipping creation."
@@ -77,17 +97,21 @@ fi
 echo "Attaching hard disk and ISO..."
 vboxmanage_cmd=("${vboxmanage}" storagectl "${vm_name}" --name 'SATA Controller' --add sata --controller IntelAhci)
 run_command "${vboxmanage_cmd[@]}"
-vboxmanage_cmd=("${vboxmanage}" storageattach "${vm_name}" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "${hdd_path}")
+vboxmanage_cmd=("${vboxmanage}" storageattach "${vm_name}" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "${hdd_name}")
 run_command "${vboxmanage_cmd[@]}"
 vboxmanage_cmd=("${vboxmanage}" storagectl "${vm_name}" --name 'IDE Controller' --add ide)
 run_command "${vboxmanage_cmd[@]}"
 vboxmanage_cmd=("${vboxmanage}" storageattach "${vm_name}" --storagectl 'IDE Controller' --port 0 --device 0 --type dvddrive --medium "${iso_path}")
 run_command "${vboxmanage_cmd[@]}"
 
+echo "Configuring VM graphics controller to VMSVGA..."
+vboxmanage_cmd=("${vboxmanage}" modifyvm "${vm_name}" --graphicscontroller vmsvga)
+run_command "${vboxmanage_cmd[@]}"
+
 echo "Configuring NAT Network Adapter with Port Forwarding..."
 vboxmanage_cmd=("${vboxmanage}" modifyvm "${vm_name}" --nic1 nat)
 run_command "${vboxmanage_cmd[@]}"
-vboxmanage_cmd=("${vboxmanage}" modifyvm "${vm_name}" --natpf1 'guestssh,$ssh_host,,$ssh_port,,22')
+vboxmanage_cmd=("${vboxmanage}" modifyvm "${vm_name}" --natpf1 "guestssh,tcp,$ssh_host,$ssh_port,,22")
 run_command "${vboxmanage_cmd[@]}"
 
 echo "VM created successfully."
