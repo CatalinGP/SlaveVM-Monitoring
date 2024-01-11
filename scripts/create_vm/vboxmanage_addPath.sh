@@ -1,11 +1,8 @@
-# Define the VirtualBox path
 $virtualBoxPath = "C:\Program Files\Oracle\VirtualBox\VirtualBox.exe"
 
-# Check if VirtualBox.exe exists
 if (Test-Path -Path $virtualBoxPath) {
     Write-Host "VirtualBox.exe found."
 
-    # Adding VirtualBox directory to PATH
     $currentPath = [Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Machine)
     if ($currentPath -notcontains "C:\Program Files\Oracle\VirtualBox") {
         $newPath = $currentPath + ";C:\Program Files\Oracle\VirtualBox"
