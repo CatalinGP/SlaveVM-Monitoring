@@ -1,22 +1,27 @@
 import subprocess
 import os
 import sys
-from paramiko import SSHClient, AutoAddPolicy, RSAKey, SSHException
 
 def install_packages(packages):
     for package in packages:
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-        except subprocess.CalledProcessError:
-            print(f"Failed to install package: {package}")
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to install package: {package}. Error: {e}")
             sys.exit(1)
 
 def check_and_install_dependencies():
-    try:
-        import paramiko
-    except ImportError:
-        print("Required library 'paramiko' not found. Installing it...")
-        install_packages(["paramiko"])
+    required_packages = ['paramiko']
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            print(f"Required library '{package}' not found. Installing it...")
+            install_packages([package])
+
+check_and_install_dependencies()
+
+from paramiko import SSHClient, AutoAddPolicy, RSAKey, SSHException
 
 def create_ssh_key(ssh_key_path):
     ssh_dir = os.path.dirname(ssh_key_path)
@@ -48,11 +53,9 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, ssh_password, local_publ
             ssh_client.set_missing_host_key_policy(AutoAddPolicy())
             ssh_client.connect(hostname=ssh_host, port=ssh_port, username=ssh_user, password=ssh_password)
 
-            # Read the local public key
             with open(local_public_key_path, 'r') as local_public_key_file:
                 public_key = local_public_key_file.read()
 
-            # Append the public key to the authorized_keys file on the VM
             ssh_client.exec_command(f'echo "{public_key}" >> ~/.ssh/authorized_keys')
 
         return True
@@ -60,7 +63,6 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, ssh_password, local_publ
         print(f"SSH error while copying public key to VM: {e}")
         return False
 
-# New function for SSH authentication
 def authenticate_ssh(ssh_key_filepath, ssh_host, ssh_port, ssh_user):
     try:
         ssh_key = RSAKey.from_private_key_file(ssh_key_filepath)
