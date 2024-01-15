@@ -1,5 +1,0 @@
-export vmname="VirtualMachine"
-export isopath="C:\Users\cpopescu\GitHub\CatalinGP\VM-Monitoring\scripts\create_vm\ubuntu-22.04.3-live-server-amd64.iso"
-export vmdir="C:\Users\cpopescu\GitHub\CatalinGP\VM-Monitoring\VirtualMachines"
-export hddname="C:\Users\cpopescu\GitHub\CatalinGP\VM-Monitoring\VirtualMachines\VMVolume.vdi"
-export volumename="VMVolume.vdi"
