@@ -165,3 +165,4 @@ scripts/monitor_vm/ssh_keys
 ssh_connect.ps1
 config/ssh_params.sh
 config/vm_params.sh
+config/ssh_keys

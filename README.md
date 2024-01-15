@@ -38,8 +38,6 @@ Virtualization support on the host machine
 > Open a web browser and navigate to http://localhost:5000.
 3. VM Management:
 > Follow the UI prompts for VM creation, management, and monitoring.
-## Contributing
-Contributions are welcome! Please read our contributing guidelines for submitting pull requests.
 
 ## License
 This project is licensed under [LICENSE NAME] - see the LICENSE file for details.

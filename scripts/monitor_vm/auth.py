@@ -1,6 +1,15 @@
 import subprocess
 import os
 import sys
+import sys, os; sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# current_directory = os.path.dirname(os.path.realpath(__file__))
+# ssh_config_path = os.path.join(os.pardir, "create_vm", 'ssh_config.py')
+from scripts.create_vm.ssh_config import ssh_config_dict
+ssh_host = ssh_config_dict["host"]
+ssh_port = ssh_config_dict["port"]
+ssh_user = ssh_config_dict["user"]
+
 
 def install_packages(packages):
     for package in packages:
@@ -9,6 +18,7 @@ def install_packages(packages):
         except subprocess.CalledProcessError as e:
             print(f"Failed to install package: {package}. Error: {e}")
             sys.exit(1)
+
 
 def check_and_install_dependencies():
     required_packages = ['paramiko']
@@ -19,9 +29,11 @@ def check_and_install_dependencies():
             print(f"Required library '{package}' not found. Installing it...")
             install_packages([package])
 
+
 check_and_install_dependencies()
 
 from paramiko import SSHClient, AutoAddPolicy, RSAKey, SSHException
+
 
 def create_ssh_key(ssh_key_path):
     ssh_dir = os.path.dirname(ssh_key_path)
@@ -40,12 +52,14 @@ def create_ssh_key(ssh_key_path):
     else:
         print(f"SSH key already exists at {ssh_key_path}")
 
+
 def is_vm_reachable(ssh_host):
     try:
         response = subprocess.run(['ping', '-n', '1', ssh_host], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return response.returncode == 0
     except subprocess.SubprocessError:
         return False
+
 
 def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, ssh_password, local_public_key_path):
     try:
@@ -63,8 +77,12 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, ssh_password, local_publ
         print(f"SSH error while copying public key to VM: {e}")
         return False
 
-def authenticate_ssh(ssh_key_filepath, ssh_host, ssh_port, ssh_user):
+
+def authenticate_ssh(ssh_key_filepath, ssh_host, ssh_port, ssh_user, password, local_pkey_path):
     try:
+        create_ssh_key(ssh_key_filepath)
+        is_vm_reachable(ssh_host)
+        copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, password, local_pkey_path)
         ssh_key = RSAKey.from_private_key_file(ssh_key_filepath)
         with SSHClient() as ssh_client:
             ssh_client.set_missing_host_key_policy(AutoAddPolicy())
