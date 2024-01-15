@@ -163,4 +163,4 @@ scripts/create_vm/ubuntu-22.04.3-live-server-amd64.iso
 VirtualMachines
 scripts/monitor_vm/ssh_keys
 ssh_connect.ps1
-#config/
+config/
