@@ -2,9 +2,7 @@
 
 ## Overview
 
-This directory, `config/`, is used for storing configuration files related to our project. 
-These files can include environment settings, configuration parameters for different development stages, 
-and other necessary configurations that are crucial for project setup and execution.
+This directory, `config/`, is used for storing configuration files related to project. These files can include environment settings, configuration parameters for different development stages, and other necessary configurations that are crucial for project setup and execution.
 
 ## Purpose
 
