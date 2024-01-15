@@ -1,8 +1,9 @@
 import subprocess
-import sys, os; sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+import sys
+import ssh_config
+import vm_config
+from vm_config import vm_config_dict
 
-from config import ssh_config, vm_config
-from config.vm_config import vm_config_dict
 
 def execute_shell_script(script_path, *args):
     try:
@@ -27,8 +28,8 @@ def create_vm(vm_directory):
         print(f"VM '{vm_directory}' already exists. Skipping creation.")
         return
 
-    # script_path = 'create_vm.sh'
-    # execute_shell_script(script_path)
+    script_path = 'create_vm.sh'
+    execute_shell_script(script_path)
 
 
 vm_dir = vm_config_dict['vmname']

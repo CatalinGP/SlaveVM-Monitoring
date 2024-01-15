@@ -160,6 +160,8 @@ cython_debug/
 .idea/
 node_modules
 scripts/create_vm/ubuntu-22.04.3-live-server-amd64.iso
-scripts/create_vm/VirtualMachines
+VirtualMachines
 scripts/monitor_vm/ssh_keys
 ssh_connect.ps1
+config/ssh_params.sh
+config/vm_params.sh
