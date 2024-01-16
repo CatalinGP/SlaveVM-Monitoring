@@ -9,6 +9,7 @@ from scp import SCPClient
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def create_ssh_key(ssh_key_path):
     ssh_dir = os.path.dirname(ssh_key_path)
     if not os.path.exists(ssh_dir):
@@ -26,12 +27,14 @@ def create_ssh_key(ssh_key_path):
     else:
         logger.info(f"SSH key already exists at {ssh_key_path}")
 
+
 def is_vm_reachable(ssh_host):
     try:
         response = subprocess.run(['ping', '-n', '1', ssh_host], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return response.returncode == 0
     except subprocess.SubprocessError:
         return False
+
 
 def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, local_public_key_path, ssh_key_filepath):
     try:
@@ -73,6 +76,7 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, local_public_key_path, s
         logger.error(f"An error occurred while connecting to VM: {e}")
 
     return False  # Authentication failed
+
 
 def transfer_status_script(ssh_key_filepath, ssh_host, ssh_port, ssh_user, local_status_script_path, remote_script_path):
     try:

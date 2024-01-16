@@ -9,6 +9,7 @@ ssh_config_dict = {
 current_directory = os.path.dirname(__file__)
 target_two_levels_upper = os.path.abspath(os.path.join(current_directory, os.pardir, os.pardir))
 
+
 def generate_ssh_config_sh():
     file_path = os.path.join(target_two_levels_upper, "config", "ssh_params.sh")
 

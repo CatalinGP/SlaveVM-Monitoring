@@ -2,6 +2,8 @@ import os
 
 current_directory = os.path.dirname(__file__)
 target_two_levels_upper = os.path.abspath(os.path.join(current_directory, os.pardir, os.pardir))
+
+
 def generate_vm_config_sh():
     file_path = os.path.join(target_two_levels_upper, "config", "vm_params.sh")
     with open(file_path, "w") as f:
