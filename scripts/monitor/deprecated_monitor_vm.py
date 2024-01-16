@@ -1,3 +1,4 @@
+import json
 import subprocess
 import time
 import os
@@ -109,8 +110,23 @@ def transfer_status_script(ssh_key_filepath, ssh_host, ssh_port, ssh_user, local
         logger.error(f"SSH error while transferring script: {e}")
         return False
 
+def organize_vm_status(status_output):
+    status_data = {}
+    current_section = None
+    lines = status_output.split('\n')
 
-def get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_path, status_script_name):
+    for line in lines:
+        line = line.strip()
+        if line:
+            if line.endswith(":"):
+                current_section = line[:-1]
+                status_data[current_section] = []
+            elif current_section:
+                status_data[current_section].append(line)
+
+    return status_data
+
+def get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_path, status_script_name, output_json_file):
     try:
         ssh_key = RSAKey.from_private_key_file(ssh_key_filepath)
         with SSHClient() as ssh_client:
@@ -122,16 +138,29 @@ def get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_
                 logger.info(f"Executing command on VM: {command}")
                 stdin, stdout, stderr = ssh_client.exec_command(command)
 
-                # Read and decode the data from stdout
-                status = stdout.read().decode().strip()
+                status_output = stdout.read().decode('utf-8')
 
-                if status:
-                    logger.info(f"VM Status: \n{status}")
+                if status_output:
+                    logger.info("VM Status Report:")
+                    organized_data = organize_vm_status(status_output)
+                    for section, lines in organized_data.items():
+                        logger.info(section)
+                        for line in lines:
+                            logger.info(line)
+                    # Convert the organized data to JSON
+                    status_json = json.dumps(organized_data, indent=4)
+                    logger.info(f"VM Status (JSON):\n{status_json}")
+
+                    # Save the JSON data to a file
+                    with open(output_json_file, 'w') as json_file:
+                        json.dump(organized_data, json_file, indent=4)
                 else:
                     logger.warning("Unable to retrieve VM status.")
                 time.sleep(5)  # Update status every 5 seconds
     except SSHException as e:
         logger.error(f"SSH error while executing script on VM: {e}")
+
+
 
 
 def run():
@@ -165,7 +194,8 @@ def run():
     if transfer_status_script(ssh_key_filepath, ssh_host, ssh_port, ssh_user, local_status_script_path, remote_script_path):
         logger.info("Script transferred. Starting monitoring...")
         while True:
-            get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_path, local_status_script_path)
+            output_json_file = 'vm_status.json'
+            get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_path, local_status_script_path, output_json_file)
             time.sleep(60)
     else:
         logger.error("Failed to transfer status script.")

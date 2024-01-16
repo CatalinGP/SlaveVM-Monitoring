@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# This script gathers basic system information for the VM.
-
 echo "VM Status Report"
 echo "-----------------"
 echo "Date and Time:"
