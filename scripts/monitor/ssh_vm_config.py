@@ -41,7 +41,6 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, local_public_key_path, s
         with SSHClient() as ssh_client:
             ssh_client.set_missing_host_key_policy(AutoAddPolicy())
 
-            # Attempt to connect to the SSH server with key-based authentication
             try:
                 ssh_key = RSAKey.from_private_key_file(ssh_key_filepath)
                 ssh_client.connect(hostname=ssh_host, port=ssh_port, username=ssh_user, pkey=ssh_key)
@@ -52,30 +51,27 @@ def copy_public_key_to_vm(ssh_host, ssh_port, ssh_user, local_public_key_path, s
 
                 ssh_client.exec_command(f'echo "{public_key}" >> ~/.ssh/authorized_keys')
 
-                return True  # Authentication was successful using SSH keys
+                return True
             except AuthenticationException as key_auth_error:
                 logger.warning(f"SSH key-based authentication failed: {key_auth_error}")
 
-            # If key-based authentication fails, prompt the user for the SSH password
             ssh_password = input("Enter the SSH password for the VM: ")
 
-            # Attempt password-based authentication
             ssh_client.connect(hostname=ssh_host, port=ssh_port, username=ssh_user, password=ssh_password)
 
-            # If the connection was successful, proceed with copying the public key
             with open(local_public_key_path, 'r') as local_public_key_file:
                 public_key = local_public_key_file.read()
 
             ssh_client.exec_command(f'echo "{public_key}" >> ~/.ssh/authorized_keys')
 
-            return True  # Authentication was successful using a password
+            return True
 
     except SSHException as e:
         logger.error(f"SSH error while copying public key to VM: {e}")
     except Exception as e:
         logger.error(f"An error occurred while connecting to VM: {e}")
 
-    return False  # Authentication failed
+    return False
 
 
 def transfer_status_script(ssh_key_filepath, ssh_host, ssh_port, ssh_user, local_status_script_path, remote_script_path):

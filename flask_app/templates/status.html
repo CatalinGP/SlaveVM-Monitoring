@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VM Status Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .status-container { margin: 20px; }
+        .status-block { margin-bottom: 20px; }
+        .status-title { font-weight: bold; margin-bottom: 5px; }
+        .status-content { background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; }
+        .status-line { margin: 5px 0; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>VM Status Dashboard</h1>
+    <div class="status-container">
+        {% for vm in vm_status %}
+            <div class="status-block">
+                <div class="status-title">VM Name: {{ vm['vm_name'] }}</div>
+                <div class="status-title">Timestamp: {{ vm['timestamp'] }}</div>
+                <div class="status-content">
+                    {% for key, values in vm['status_data'].items() %}
+                        <div class="status-title">{{ key }}</div>
+                        <pre>{{ values | join('\n') }}</pre>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

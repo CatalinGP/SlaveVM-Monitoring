@@ -2,9 +2,14 @@ import json
 import os
 import time
 import logging
+
 from . import ssh_vm_config
-from . import vm_status_monitor
+from . import get_vm_status
 from ..create.ssh_config import ssh_config_dict
+
+# import ssh_vm_config
+# import get_vm_status
+# from scripts.create.ssh_config import ssh_config_dict
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -43,8 +48,12 @@ def run():
             return {}
 
         output_json_file = os.path.join(base_dir, 'vm_status.json')
-        vm_status_monitor.get_vm_status(ssh_key_filepath, ssh_host, ssh_port, ssh_user, remote_script_path,
-                                        script_filename)
+        get_vm_status.get_status(ssh_key_filepath,
+                                 ssh_host,
+                                 ssh_port,
+                                 ssh_user,
+                                 remote_script_path,
+                                 script_filename)
 
         if os.path.exists(output_json_file):
             with open(output_json_file, 'r') as file:
@@ -55,3 +64,4 @@ def run():
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return {}
+

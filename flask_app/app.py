@@ -1,40 +1,37 @@
-from flask import Flask, jsonify, render_template
-import sqlite3
-from scripts.monitor import monitor_vm
+import json
+import subprocess
 
+from flask import Flask, render_template
+from db.db_manager import get_all_vm_status
+from scripts.monitor import monitor_vm
 app = Flask(__name__)
 
-# def display_data():
-#     db_path = 'vm_status.db'
-#     conn = sqlite3.connect(db_path)
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT id, vm_name, status_data FROM vm_status")
-#     rows = cursor.fetchall()
-#     conn.close()
-#     data = [{"ID": row[0], "VM Name": row[1], "Status Data": row[2]} for row in rows]
-#     return data
 
 @app.route('/')
 def home():
     return "Welcome to the VM Status Web App!"
 
-# @app.route('/status')
-# def vm_status():
-#     data = display_data()
-#     return jsonify(data)
-#
-# @app.route('/status-table')
-# def vm_status_table():
-#     data = display_data()
-#     return render_template('vm_status_table.html', data=data)
+
+@app.route('/status')
+def status():
+    raw_vm_status_data = get_all_vm_status()
+    vm_status_data = []
+
+    for vm in raw_vm_status_data:
+        vm_dict = {
+            "id": vm[0],
+            "vm_name": vm[1],
+            "status_data": json.loads(vm[2]) if vm[2] else {},  # Safely parse JSON
+            "timestamp": vm[3]
+        }
+        vm_status_data.append(vm_dict)
+
+    return render_template('status.html', vm_status=vm_status_data)
 
 
 if __name__ == '__main__':
-    # with app.app_context():
-    #     monitor_vm.run()
+    subprocess.Popen(["python", "../scripts/monitor/monitor_vm.py"])
     app.run(debug=True)
-
-
 
 
 # from flask import Flask, jsonify, render_template
@@ -64,3 +61,4 @@ if __name__ == '__main__':
 #
 # if __name__ == '__main__':
 #     app.run(debug=True)
+#
