@@ -161,7 +161,7 @@ cython_debug/
 node_modules
 scripts/create/ubuntu-22.04.3-live-server-amd64.iso
 VirtualMachines
-scripts/monitor/ssh_keys
+scripts/monitoring/ssh_keys
 ssh_connect.ps1
 config/ssh_params.sh
 config/vm_params.sh

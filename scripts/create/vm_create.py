@@ -17,6 +17,7 @@ def is_vm_exists(vm_directory):
     vboxmanage_path = "C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe"
     try:
         existing_vms = subprocess.check_output([vboxmanage_path, "list", "vms"], shell=True).decode()
+        start_vm(vm_directory)
         return vm_directory in existing_vms
     except subprocess.CalledProcessError as e:
         print(f"Error checking existing VMs: {e.output.decode().strip()}", file=sys.stderr)
@@ -32,12 +33,21 @@ def create_vm(vm_directory):
     execute_shell_script(script_path)
 
 
-vm_dir = vm_config_dict['vmname']
-vboxmanage_file = 'vboxmanage_addPath.sh'
-execute_shell_script(vboxmanage_file)
+def start_vm(vm_directory):
+    vboxmanage_path = "C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe"
+    try:
+        print(f"Starting VM'{vm_directory}'...")
+        subprocess.check_output([vboxmanage_path,
+                                 "startvm",
+                                 vm_directory],
+                                shell=True)
+        print(f"VM '{vm_directory}' started succesfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error starting VM '{vm_directory}': {e.output.decode().strip()}", file=sys.stderr)
+        sys.exit(1)
 
-# os.makedirs(vm_dir, exist_ok=True)
 
+execute_shell_script('vboxmanage_addPath.sh')
 vm_config.generate_vm_config_sh()
 ssh_config.generate_ssh_config_sh()
-create_vm(vm_dir)
+create_vm(vm_config_dict['vmname'])
