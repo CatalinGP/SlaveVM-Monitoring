@@ -1,8 +1,6 @@
-
-from scripts.create.ssh_config import ssh_config_dict
-
-def get_config_value(key):
-    if key in ssh_config_dict:
-        return config_dict_1[key]
-    else:
-        raise KeyError(f"Config key {key} not found.")
+HOST = "127.0.0.1"
+PORT = 5050
+USERNAME = "gabriel"
+KEY_FILE = "id_rsa"
+COMMAND_SCRIPT_1 = "status_report.py"
+CPU_TEST_SCRIPT = "cpu_testing.sh"

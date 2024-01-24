@@ -19,6 +19,9 @@ def run():
         status_report_script_filename = "status_report.sh"
         local_status_report_script_path = os.path.join(base_dir, status_report_script_filename)
 
+        cpu_testing_script_filename = "cpu_testing.sh"
+        local_cpu_testing_script_path = os.path.join(base_dir, cpu_testing_script_filename)
+
         config_dir = os.path.abspath(os.path.join(base_dir, os.pardir, os.pardir, 'config'))
         ssh_key_filepath = os.path.join(config_dir, 'ssh_keys', 'id_rsa')
         local_public_key_path = os.path.join(config_dir, 'ssh_keys', 'id_rsa.pub')
@@ -42,6 +45,15 @@ def run():
                                                 local_status_report_script_path,
                                                 remote_script_path,
                                                 status_report_script_filename):
+                logger.error("Failed to transfer the status script.")
+                return {}
+            if not ssh_vm_utils.transfer_script(ssh_host,
+                                                ssh_key_filepath,
+                                                ssh_port,
+                                                ssh_user,
+                                                local_cpu_testing_script_path,
+                                                remote_script_path,
+                                                cpu_testing_script_filename):
                 logger.error("Failed to transfer the status script.")
                 return {}
 

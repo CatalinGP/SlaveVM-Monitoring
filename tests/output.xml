@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.10.0 on win32)" generated="2024-01-24T15:42:26.563987" rpa="false" schemaversion="5">
+<suite id="s1" name="Vm Monitoring" source="C:\Users\cpopescu\GitHub\CatalinGP\VM-Monitoring\tests\vm_monitoring.robot">
+<test id="s1-t1" name="Connect and Test SSH Connection with Key" line="9">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:26.581507" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:26.582480" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:27.678854" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:26 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:26.581507" elapsed="1.097347"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:27.679778" level="INFO">Connection with key test completed.</msg>
+<arg>Connection with key test completed.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:27.679778" elapsed="0.000000"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:27.680756" elapsed="0.000895"/>
+</kw>
+<doc>Test SSH connection using a key.</doc>
+<tag>key</tag>
+<tag>ssh</tag>
+<status status="PASS" start="2024-01-24T15:42:26.581507" elapsed="1.101125"/>
+</test>
+<test id="s1-t2" name="Execute Script with SSH Key Connection" line="17">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:27.683686" elapsed="0.000979"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:27.684665" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:28.778119" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:27 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:27.684665" elapsed="1.093454"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:28.779053" level="INFO">Executing command 'status_report.py'.</msg>
+<msg time="2024-01-24T15:42:28.793682" level="INFO">Command exited with return code 127.</msg>
+<msg time="2024-01-24T15:42:28.793682" level="INFO">${output} = </msg>
+<var>${output}</var>
+<arg>${COMMAND_SCRIPT_1}</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.779053" elapsed="0.014629"/>
+</kw>
+<kw name="Run Keyword And Continue On Failure" owner="BuiltIn">
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:28.794623" level="INFO">{{{}}</msg>
+<msg time="2024-01-24T15:42:28.794623" level="INFO">level=INFO</msg>
+<arg>{{{${output}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.794623" elapsed="0.000000"/>
+</kw>
+<arg>Log Many</arg>
+<arg>{{{${output}}}</arg>
+<arg>level=INFO</arg>
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.793682" elapsed="0.000941"/>
+</kw>
+<kw name="Run Keyword And Continue On Failure" owner="BuiltIn">
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2024-01-24T15:42:28.795516" level="INFO">Length is 0.</msg>
+<arg>${output}</arg>
+<arg>msg=Script execution failed</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.795516" elapsed="0.000000"/>
+</kw>
+<arg>Should Be Empty</arg>
+<arg>${output}</arg>
+<arg>msg=Script execution failed</arg>
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.794623" elapsed="0.000893"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:28.795516" level="INFO">Script execution test completed.</msg>
+<arg>Script execution test completed.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.795516" elapsed="0.000000"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.795516" elapsed="0.000973"/>
+</kw>
+<doc>Execute a script on the remote server using SSH key.</doc>
+<tag>execute</tag>
+<tag>ssh</tag>
+<status status="PASS" start="2024-01-24T15:42:27.683178" elapsed="1.113311"/>
+</test>
+<test id="s1-t3" name="Test CPU Performance" line="28">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.797498" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:28.798436" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:29.913180" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:28 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.798436" elapsed="1.114744"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:29.915014" level="INFO">Executing command 'top -bn1 | grep "Cpu(s)" | awk '{print $2}''.</msg>
+<msg time="2024-01-24T15:42:30.134915" level="INFO">Command exited with return code 0.</msg>
+<msg time="2024-01-24T15:42:30.134915" level="INFO">${cpu_usage} = 0.0</msg>
+<var>${cpu_usage}</var>
+<arg>top -bn1 | grep "Cpu(s)" | awk '{print $2}'</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:29.915014" elapsed="0.219901"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:30.135843" level="INFO">CPU Usage on Remote Server: 0.0</msg>
+<arg>CPU Usage on Remote Server: ${cpu_usage}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.134915" elapsed="0.000928"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.135843" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:30.137708" level="INFO">CPU usage is within acceptable limits</msg>
+<arg>CPU usage is within acceptable limits</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.137708" elapsed="0.000000"/>
+</kw>
+<arg>${cpu_usage} &gt; 90</arg>
+<arg>Fail</arg>
+<arg>CPU usage is high</arg>
+<arg>ELSE</arg>
+<arg>Log</arg>
+<arg>CPU usage is within acceptable limits</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.136734" elapsed="0.000974"/>
+</kw>
+<doc>Test CPU performance on a remote server.</doc>
+<status status="PASS" start="2024-01-24T15:42:28.796489" elapsed="1.341219"/>
+</test>
+<test id="s1-t4" name="Service Monitoring" line="38">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.138680" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:30.138680" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:31.244544" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:29 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:30.138680" elapsed="1.105864"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:31.244544" level="INFO">Executing command 'systemctl status apache2'.</msg>
+<msg time="2024-01-24T15:42:31.259138" level="INFO">Command exited with return code 4.</msg>
+<msg time="2024-01-24T15:42:31.259138" level="INFO">${status} = </msg>
+<var>${status}</var>
+<arg>systemctl status apache2</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.244544" elapsed="0.014594"/>
+</kw>
+<kw name="Run Keyword And Continue On Failure" owner="BuiltIn">
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:31.259138" level="INFO">{{{}}</msg>
+<msg time="2024-01-24T15:42:31.259138" level="INFO">level=INFO</msg>
+<arg>{{{${status}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.259138" elapsed="0.000000"/>
+</kw>
+<arg>Log Many</arg>
+<arg>{{{${status}}}</arg>
+<arg>level=INFO</arg>
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.259138" elapsed="0.000000"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${status}</arg>
+<arg>inactive</arg>
+<arg>msg=Apache2 service is inactive</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.259138" elapsed="0.000857"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.259995" elapsed="0.000974"/>
+</kw>
+<doc>Ensure critical services like web servers are running.</doc>
+<tag>monitoring</tag>
+<tag>service</tag>
+<status status="PASS" start="2024-01-24T15:42:30.138680" elapsed="1.122289"/>
+</test>
+<test id="s1-t5" name="Log Monitoring Test" line="48">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.260969" elapsed="0.000973"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:31.261942" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:32.360102" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:31 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:31.261942" elapsed="1.099988"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:32.362903" level="INFO">Executing command 'grep -c 'error' /var/log/syslog | awk '{print $1}''.</msg>
+<msg time="2024-01-24T15:42:32.378475" level="INFO">Command exited with return code 0.</msg>
+<msg time="2024-01-24T15:42:32.378475" level="INFO">${error_count} = 4</msg>
+<var>${error_count}</var>
+<arg>grep -c 'error' /var/log/syslog | awk '{print $1}'</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.361930" elapsed="0.016545"/>
+</kw>
+<kw name="Convert To Integer" owner="BuiltIn">
+<msg time="2024-01-24T15:42:32.378475" level="INFO">${error_count_as_integer} = 4</msg>
+<var>${error_count_as_integer}</var>
+<arg>${error_count}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.378475" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:32.379448" level="INFO">Number of errors in syslog: 4</msg>
+<arg>Number of errors in syslog: ${error_count_as_integer}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.378475" elapsed="0.000973"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:32.379448" level="INFO">Executing command 'grep 'error' /var/log/syslog'.</msg>
+<msg time="2024-01-24T15:42:32.392101" level="INFO">Command exited with return code 0.</msg>
+<msg time="2024-01-24T15:42:32.392101" level="INFO">${syslog_errors} = Jan 23 14:07:49 gabriel systemd[1]: Condition check resulted in Process error reports when automatic reporting is enabled (file watch) being skipped.
+Jan 23 14:07:49 gabriel systemd[1]: Condition chec...</msg>
+<var>${syslog_errors}</var>
+<arg>grep 'error' /var/log/syslog</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.379448" elapsed="0.012653"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-01-24T15:42:32.393075" level="INFO">Jan 23 14:07:49 gabriel systemd[1]: Condition check resulted in Process error reports when automatic reporting is enabled (file watch) being skipped.
+Jan 23 14:07:49 gabriel systemd[1]: Condition check resulted in Process error reports when automatic reporting is enabled (timer based) being skipped.
+Jan 24 11:28:24 gabriel systemd[1]: Condition check resulted in Process error reports when automatic reporting is enabled (file watch) being skipped.
+Jan 24 11:28:24 gabriel systemd[1]: Condition check resulted in Process error reports when automatic reporting is enabled (timer based) being skipped.</msg>
+<arg>${syslog_errors}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.393075" elapsed="0.000000"/>
+</kw>
+<arg>${error_count_as_integer} &gt; 0</arg>
+<arg>BuiltIn.Log</arg>
+<arg>${syslog_errors}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.392101" elapsed="0.000974"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.393075" elapsed="0.001040"/>
+</kw>
+<doc>Check for errors in the system log file.</doc>
+<tag>logs</tag>
+<tag>monitoring</tag>
+<status status="PASS" start="2024-01-24T15:42:31.260969" elapsed="1.133146"/>
+</test>
+<test id="s1-t6" name="Security Checks Test" line="60">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.395022" elapsed="0.000973"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:32.395995" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:33.494221" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:32 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:32.395995" elapsed="1.098226"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:33.495145" level="INFO">Executing command 'ufw status'.</msg>
+<msg time="2024-01-24T15:42:33.542970" level="INFO">Command exited with return code 1.</msg>
+<msg time="2024-01-24T15:42:33.542970" level="INFO">${firewall_status} = </msg>
+<var>${firewall_status}</var>
+<arg>ufw status</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.495145" elapsed="0.047825"/>
+</kw>
+<kw name="Run Keyword And Continue On Failure" owner="BuiltIn">
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:33.542970" level="INFO">{{{}}</msg>
+<msg time="2024-01-24T15:42:33.542970" level="INFO">level=INFO</msg>
+<arg>{{{${firewall_status}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.542970" elapsed="0.000000"/>
+</kw>
+<arg>Log Many</arg>
+<arg>{{{${firewall_status}}}</arg>
+<arg>level=INFO</arg>
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.542970" elapsed="0.000000"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${firewall_status}</arg>
+<arg>inactive</arg>
+<arg>msg=Firewall is not active</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.543857" elapsed="0.000000"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.543857" elapsed="0.000000"/>
+</kw>
+<doc>Verify firewall status and security configurations.</doc>
+<tag>checks</tag>
+<tag>security</tag>
+<status status="PASS" start="2024-01-24T15:42:32.394115" elapsed="1.149742"/>
+</test>
+<test id="s1-t7" name="Network Connectivity Test" line="70">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.544830" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:33.545804" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:34.661582" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:33 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:33.544830" elapsed="1.116752"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:34.662446" level="INFO">Executing command 'ping -c 4 google.com'.</msg>
+<msg time="2024-01-24T15:42:37.809849" level="INFO">Command exited with return code 0.</msg>
+<msg time="2024-01-24T15:42:37.809849" level="INFO">${ping_result} = PING google.com (172.217.18.110) 56(84) bytes of data.
+64 bytes from fra16s42-in-f14.1e100.net (172.217.18.110): icmp_seq=1 ttl=115 time=8.71 ms
+64 bytes from zrh04s05-in-f110.1e100.net (172.217.18.11...</msg>
+<var>${ping_result}</var>
+<arg>ping -c 4 google.com</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:34.662446" elapsed="3.147403"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:37.810709" level="INFO">{{{PING google.com (172.217.18.110) 56(84) bytes of data.
+64 bytes from fra16s42-in-f14.1e100.net (172.217.18.110): icmp_seq=1 ttl=115 time=8.71 ms
+64 bytes from zrh04s05-in-f110.1e100.net (172.217.18.110): icmp_seq=2 ttl=115 time=10.1 ms
+64 bytes from zrh04s05-in-f110.1e100.net (172.217.18.110): icmp_seq=3 ttl=115 time=11.0 ms
+64 bytes from zrh04s05-in-f110.1e100.net (172.217.18.110): icmp_seq=4 ttl=115 time=9.42 ms
+
+--- google.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3116ms
+rtt min/avg/max/mdev = 8.707/9.817/11.002/0.850 ms}}</msg>
+<msg time="2024-01-24T15:42:37.810709" level="INFO">level=INFO</msg>
+<arg>{{{${ping_result}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:37.810709" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${ping_result}</arg>
+<arg>0% packet loss</arg>
+<arg>msg=Network connectivity issue</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2024-01-24T15:42:37.811682" elapsed="0.000000"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:37.812658" elapsed="0.000971"/>
+</kw>
+<doc>Test network connectivity to a specific service.</doc>
+<tag>connectivity</tag>
+<tag>network</tag>
+<status status="PASS" start="2024-01-24T15:42:33.544830" elapsed="4.268799"/>
+</test>
+<test id="s1-t8" name="Performance Monitoring Test" line="80">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:37.814601" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:37.815574" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:38.919074" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:34 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:37.815574" elapsed="1.103500"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:38.920904" level="INFO">Executing command 'top -bn1'.</msg>
+<msg time="2024-01-24T15:42:39.096212" level="INFO">Command exited with return code 0.</msg>
+<msg time="2024-01-24T15:42:39.096212" level="INFO">${performance_metrics} = top - 13:41:40 up  4:14,  2 users,  load average: 0.06, 0.02, 0.00
+Tasks: 193 total,   1 running, 192 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  1.5 sy,  0.0 ni, 98.5 id,  0.0 wa,  0.0 hi,  ...</msg>
+<var>${performance_metrics}</var>
+<arg>top -bn1</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:38.920009" elapsed="0.176203"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:39.097136" level="INFO">{{{top - 13:41:40 up  4:14,  2 users,  load average: 0.06, 0.02, 0.00
+Tasks: 193 total,   1 running, 192 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  1.5 sy,  0.0 ni, 98.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   3863.6 total,   3188.9 free,    231.8 used,    442.9 buff/cache
+MiB Swap:   3863.0 total,   3863.0 free,      0.0 used.   3406.4 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+      1 root      20   0  166468  11884   8468 S   0.0   0.3   0:02.67 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.01 kthreadd
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par+
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 slub_fl+
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns
+      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_perc+
+     11 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tas+
+     12 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tas+
+     13 root      20   0       0      0      0 S   0.0   0.0   0:00.11 ksoftir+
+     14 root      20   0       0      0      0 I   0.0   0.0   0:04.29 rcu_sch+
+     15 root      rt   0       0      0      0 S   0.0   0.0   0:00.57 migrati+
+     16 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_in+
+     18 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0
+     19 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/1
+     20 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_in+
+     21 root      rt   0       0      0      0 S   0.0   0.0   0:00.84 migrati+
+     22 root      20   0       0      0      0 S   0.0   0.0   0:00.05 ksoftir+
+     24 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+     25 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/2
+     26 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_in+
+     27 root      rt   0       0      0      0 S   0.0   0.0   0:00.45 migrati+
+     28 root      20   0       0      0      0 S   0.0   0.0   0:00.48 ksoftir+
+     30 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+     31 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/3
+     32 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_in+
+     33 root      rt   0       0      0      0 S   0.0   0.0   0:00.90 migrati+
+     34 root      20   0       0      0      0 S   0.0   0.0   0:00.07 ksoftir+
+     36 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+     37 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kdevtmp+
+     38 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 inet_fr+
+     39 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kauditd
+     40 root      20   0       0      0      0 S   0.0   0.0   0:00.01 khungta+
+     41 root      20   0       0      0      0 S   0.0   0.0   0:00.00 oom_rea+
+     42 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 writeba+
+     43 root      20   0       0      0      0 S   0.0   0.0   0:01.11 kcompac+
+     44 root      25   5       0      0      0 S   0.0   0.0   0:00.00 ksmd
+     45 root      39  19       0      0      0 S   0.0   0.0   0:00.00 khugepa+
+     93 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kintegr+
+     94 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kblockd
+     95 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 blkcg_p+
+     96 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 tpm_dev+
+     97 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 ata_sff
+     98 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 md
+     99 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 edac-po+
+    100 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 devfreq+
+    101 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 watchdo+
+    103 root       0 -20       0      0      0 I   0.0   0.0   0:00.06 kworker+
+    105 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kswapd0
+    106 root      20   0       0      0      0 S   0.0   0.0   0:00.00 ecryptf+
+    108 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kthrotld
+    109 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 acpi_th+
+    112 root      20   0       0      0      0 S   0.0   0.0   0:00.01 scsi_eh+
+    113 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    114 root      20   0       0      0      0 S   0.0   0.0   0:00.03 scsi_eh+
+    115 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    117 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 vfio-ir+
+    118 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mld
+    119 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 ipv6_ad+
+    122 root       0 -20       0      0      0 I   0.0   0.0   0:00.09 kworker+
+    131 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kstrp
+    134 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 zswap-s+
+    135 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+    140 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 charger+
+    164 root       0 -20       0      0      0 I   0.0   0.0   0:00.10 kworker+
+    190 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 cryptd
+    212 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    214 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    215 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    216 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    218 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    226 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    228 root       0 -20       0      0      0 I   0.0   0.0   0:00.10 kworker+
+    236 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 ttm_swap
+    237 root     -51   0       0      0      0 S   0.0   0.0   0:04.57 irq/18-+
+    238 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    239 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    240 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    241 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    242 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    243 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    244 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    245 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    246 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    247 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    248 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    249 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    250 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    251 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    252 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    253 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    254 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    255 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    256 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    257 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    258 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    259 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    260 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    261 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    262 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    263 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    264 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    265 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    266 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    267 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    268 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    269 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    270 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    271 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    272 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    273 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    274 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    275 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    276 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    277 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    278 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    279 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    280 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    281 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    282 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    283 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    284 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    285 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    286 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    287 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    288 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    289 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    290 root      20   0       0      0      0 S   0.0   0.0   0:00.00 scsi_eh+
+    291 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 scsi_tm+
+    292 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    293 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    295 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    297 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    322 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    323 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    324 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    325 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 card0-c+
+    341 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kdmflush
+    367 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 raid5wq
+    415 root      20   0       0      0      0 S   0.0   0.0   0:00.12 jbd2/dm+
+    416 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 ext4-rs+
+    489 root      19  -1   72548  22420  21232 S   0.0   0.6   0:01.17 systemd+
+    525 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kaluad
+    528 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kmpath_+
+    529 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kmpathd
+    530 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kmpath_+
+    531 root      rt   0  289460  27240   9072 S   0.0   0.7   0:03.02 multipa+
+    535 root      20   0   26352   7328   4812 S   0.0   0.2   0:00.19 systemd+
+    686 root      20   0       0      0      0 S   0.0   0.0   0:00.00 jbd2/sd+
+    687 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 ext4-rs+
+    708 systemd+  20   0   89360   6592   5792 S   0.0   0.2   0:00.08 systemd+
+    748 systemd+  20   0   16124   7988   6976 S   0.0   0.2   0:00.07 systemd+
+    750 systemd+  20   0   25536  12376   8184 S   0.0   0.3   0:00.16 systemd+
+    761 root      20   0    6896   2868   2628 S   0.0   0.1   0:00.04 cron
+    762 message+  20   0    8872   5076   4192 S   0.0   0.1   0:02.01 dbus-da+
+    769 root      20   0   82700   3976   3636 S   0.0   0.1   0:00.87 irqbala+
+    770 root      20   0   32732  19172  10548 S   0.0   0.5   0:00.05 network+
+    771 root      20   0  234496   7244   6572 S   0.0   0.2   0:00.57 polkitd
+    772 syslog    20   0  222404   5704   4368 S   0.0   0.1   0:00.25 rsyslogd
+    775 root      20   0 1466992  29724  19280 S   0.0   0.8   0:01.68 snapd
+    778 root      20   0   23692   7724   6768 S   0.0   0.2   0:01.15 systemd+
+    780 root      20   0  392604  12840  10660 S   0.0   0.3   0:00.37 udisksd
+    814 root      20   0   15432   9324   7692 S   0.0   0.2   0:00.23 sshd
+    816 root      20   0  317956  12304  10400 S   0.0   0.3   0:00.39 ModemMa+
+    818 root      20   0  109736  21700  13564 S   0.0   0.5   0:00.03 unatten+
+   1163 root      20   0  295568  20436  17532 S   0.0   0.5   0:00.56 package+
+   3253 root      20   0    7836   4600   3696 S   0.0   0.1   0:00.01 login
+   3308 gabriel   20   0   17100   9608   7924 S   0.0   0.2   0:00.03 systemd
+   3309 gabriel   20   0  169392   3928     16 S   0.0   0.1   0:00.00 (sd-pam)
+   3315 gabriel   20   0    8876   5644   3760 S   0.0   0.1   0:00.12 bash
+  15863 root      20   0       0      0      0 I   0.0   0.0   0:02.08 kworker+
+  18218 root      20   0       0      0      0 I   0.0   0.0   0:00.81 kworker+
+  21277 root      20   0       0      0      0 I   0.0   0.0   0:00.37 kworker+
+  22511 root      20   0       0      0      0 I   0.0   0.0   0:00.55 kworker+
+  22752 root      20   0       0      0      0 I   0.0   0.0   0:01.18 kworker+
+  23346 root      20   0       0      0      0 I   0.0   0.0   0:00.85 kworker+
+  23404 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  23465 root      20   0       0      0      0 I   0.0   0.0   0:00.11 kworker+
+  23812 root      20   0       0      0      0 I   0.0   0.0   0:00.95 kworker+
+  25497 root      20   0       0      0      0 I   0.0   0.0   0:00.08 kworker+
+  27364 root      20   0       0      0      0 I   0.0   0.0   0:00.06 kworker+
+  27433 root      20   0       0      0      0 I   0.0   0.0   0:00.01 kworker+
+  27491 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  27552 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  27610 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  27728 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  28069 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  28250 root      20   0       0      0      0 I   0.0   0.0   0:00.00 kworker+
+  28363 root      20   0   16924  10812   8656 S   0.0   0.3   0:00.00 sshd
+  28409 gabriel   20   0   17220   8112   5672 S   0.0   0.2   0:00.00 sshd
+  28410 gabriel   20   0    8688   5408   3700 S   0.0   0.1   0:00.00 bash
+  28419 gabriel   20   0   10476   4112   3420 R   0.0   0.1   0:00.00 top}}</msg>
+<msg time="2024-01-24T15:42:39.097136" level="INFO">level=INFO</msg>
+<arg>{{{${performance_metrics}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:39.096212" elapsed="0.000924"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:39.097136" elapsed="0.000900"/>
+</kw>
+<doc>Monitor system performance metrics.</doc>
+<tag>monitoring</tag>
+<tag>performance</tag>
+<status status="PASS" start="2024-01-24T15:42:37.814601" elapsed="1.283435"/>
+</test>
+<test id="s1-t9" name="Automated Deployment Test" line="89">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:39.099984" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:39.099984" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:40.210866" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:38 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:39.099984" elapsed="1.110882"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:40.211797" level="INFO">Executing command 'ansible-playbook --check your_playbook.yml'.</msg>
+<msg time="2024-01-24T15:42:40.227409" level="INFO">Command exited with return code 127.</msg>
+<msg time="2024-01-24T15:42:40.227409" level="INFO">${deployment_status} = </msg>
+<var>${deployment_status}</var>
+<arg>ansible-playbook --check your_playbook.yml</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:40.211797" elapsed="0.015612"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:40.228351" level="INFO">{{{}}</msg>
+<msg time="2024-01-24T15:42:40.228351" level="INFO">level=INFO</msg>
+<arg>{{{${deployment_status}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:40.227409" elapsed="0.000942"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:40.228351" elapsed="0.000893"/>
+</kw>
+<doc>Check status of an automated deployment tool.</doc>
+<tag>automated</tag>
+<tag>deployment</tag>
+<status status="PASS" start="2024-01-24T15:42:39.099013" elapsed="1.130231"/>
+</test>
+<test id="s1-t10" name="Backup and Recovery Test" line="98">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2024-01-24T15:42:40.231192" elapsed="0.000000"/>
+</kw>
+<kw name="Login With Public Key" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:40.232212" level="INFO">Logging into '127.0.0.1:5050' as 'gabriel'.</msg>
+<msg time="2024-01-24T15:42:41.342986" level="INFO">Read output: Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 24 01:41:12 PM UTC 2024
+
+  System load:  0.0                Processes:               187
+  Usage of /:   30.6% of 22.87GB   Users logged in:         1
+  Memory usage: 7%                 IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+45 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Jan 24 13:41:40 2024 from 10.0.2.2
+[?2004hgabriel@gabriel:~$</msg>
+<arg>${USERNAME}</arg>
+<arg>${KEY_FILE}</arg>
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<status status="PASS" start="2024-01-24T15:42:40.232212" elapsed="1.110774"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2024-01-24T15:42:41.342986" level="INFO">Executing command 'rsync --dry-run -av /source /backup'.</msg>
+<msg time="2024-01-24T15:42:41.410587" level="INFO">Command exited with return code 23.</msg>
+<msg time="2024-01-24T15:42:41.410587" level="INFO">${backup_test} = sending incremental file list
+
+sent 19 bytes  received 12 bytes  62.00 bytes/sec
+total size is 0  speedup is 0.00 (DRY RUN)</msg>
+<var>${backup_test}</var>
+<arg>rsync --dry-run -av /source /backup</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2024-01-24T15:42:41.342986" elapsed="0.067601"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2024-01-24T15:42:41.411508" level="INFO">{{{sending incremental file list
+
+sent 19 bytes  received 12 bytes  62.00 bytes/sec
+total size is 0  speedup is 0.00 (DRY RUN)}}</msg>
+<msg time="2024-01-24T15:42:41.411508" level="INFO">level=INFO</msg>
+<arg>{{{${backup_test}}}</arg>
+<arg>level=INFO</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2024-01-24T15:42:41.411508" elapsed="0.000000"/>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary" type="TEARDOWN">
+<doc>Closes the current connection.</doc>
+<status status="PASS" start="2024-01-24T15:42:41.411508" elapsed="0.000971"/>
+</kw>
+<doc>Verify backup processes and test recovery procedures.</doc>
+<tag>backup</tag>
+<tag>recovery</tag>
+<status status="PASS" start="2024-01-24T15:42:40.230219" elapsed="1.182260"/>
+</test>
+<doc>SSH Connection Test</doc>
+<status status="PASS" start="2024-01-24T15:42:26.564960" elapsed="14.848494"/>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">automated</stat>
+<stat pass="1" fail="0" skip="0">backup</stat>
+<stat pass="1" fail="0" skip="0">checks</stat>
+<stat pass="1" fail="0" skip="0">connectivity</stat>
+<stat pass="1" fail="0" skip="0">deployment</stat>
+<stat pass="1" fail="0" skip="0">execute</stat>
+<stat pass="1" fail="0" skip="0">key</stat>
+<stat pass="1" fail="0" skip="0">logs</stat>
+<stat pass="3" fail="0" skip="0">monitoring</stat>
+<stat pass="1" fail="0" skip="0">network</stat>
+<stat pass="1" fail="0" skip="0">performance</stat>
+<stat pass="1" fail="0" skip="0">recovery</stat>
+<stat pass="1" fail="0" skip="0">security</stat>
+<stat pass="1" fail="0" skip="0">service</stat>
+<stat pass="2" fail="0" skip="0">ssh</stat>
+</tag>
+<suite>
+<stat pass="10" fail="0" skip="0" id="s1" name="Vm Monitoring">Vm Monitoring</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
